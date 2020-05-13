@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div id="mapid" class="map"></div>
+         <p> Info: W prawym górnym rogu mapy jest ikonka "Draw a polygon". Naciśnij ją, a następnie zaznacz dany obszar na mapie.</p>
+                {{ form_start(form) }}
+                {{ form_errors(form.latLng) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.tags, {
+                    label: 'Tagi (opcjonalnie)'
+                }) }}
+                {{ form_row(form.status, {
+                    label: 'Status (opcjonalnie)'
+                }) }}
+                {{ form_row(form.description, {
+                    label: 'Opis (opcjonalnie)'
+                }) }}
+                <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
+                {{ form_end(form) }}
+            </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        {% for area in areas %}
+        {% if area.latLng %}
+        L.polygon([{{  area.latLng }}]).addTo(map);
+        {% endif %}
+        {% endfor %}
+
+        var editableLayers = new L.FeatureGroup();
+        map.addLayer(editableLayers);
+
+        var drawPluginOptions = {
+            position: 'topright',
+            draw: {
+                polygon: {
+                    allowIntersection: false, // Restricts shapes to simple polygons
+                    drawError: {
+                        color: '#e1e100', // Color the shape will turn when intersects
+                        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                    },
+                    shapeOptions: {
+                        color: 'red'
+                    }
+                },
+                polyline: false,
+                circle: false,
+                circlemarker: false,
+                rectangle: false,
+                marker: false,
+            },
+            edit: {
+                featureGroup: editableLayers,
+                remove: false
+            }
+        };
+
+        let drawControl = new L.Control.Draw(drawPluginOptions);
+        map.addControl(drawControl);
+
+        map.on('draw:created', function (e) {
+            let layer = e.layer;
+            editableLayers.addLayer(layer);
+
+            let normalize = layer.getLatLngs();
+            let newArr = normalize[0].map(function(val){
+                return Array(val.lat, val.lng);
+            })
+            document.getElementById('area_latLng').value = JSON.stringify(newArr);
+        });
+    </script>
+{% endblock %}

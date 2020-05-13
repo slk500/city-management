@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ msg|raw }}
+            </div>
+        {% endfor %}
+
+        <div id="mapid" class="map"></div>
+        <a href="{{ path('app_area_update', {id: area.id}) }}" class="btn btn-secondary center">Edytuj</a>
+        <br><br>
+            <p>Nazwa: {{ area.name }}</p>
+            <p>Tagi: {{ area.tags }}</p>
+            <p>Status: {{ area.tags }}</p>
+            <p>Opis: {{ area.description }}</p>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        {% for area_in_loop in areas %}
+            {% if area_in_loop.latLng %}
+                {% if area_in_loop.id  == area.id %}
+                    L.polygon([{{  area_in_loop.latLng }}]).setStyle({
+                        color: 'red'
+                    }).addTo(map);
+                {% else %}
+                    L.polygon([{{  area_in_loop.latLng }}]).addTo(map);
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </script>
+{% endblock %}

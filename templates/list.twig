@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div id="mapid" class="map"></div>
+        <a href="{{ path('app_area_create') }}" class="btn btn-secondary center">Dodaj</a>
+        <table class="table table-striped text-center">
+            <thead>
+            <tr>
+                <th class="text-center"></th>
+                <th class="text-center">Nazwa</th>
+                <th class="text-center">Tagi</th>
+                <th class="text-center">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for area in areas %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td> <a href="{{ path('app_area_show', { id: area.id }) }}"> {{ area.name }} </a> </td>
+                    <td> {{ area.tags }} </td>
+                    <td> {{ area.status }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        {% for area in areas %}
+            {% if area.latLng %}
+                L.polygon([{{  area.latLng }}]).addTo(map);
+            {% endif %}
+        {% endfor %}
+
+        var editableLayers = new L.FeatureGroup();
+        map.addLayer(editableLayers);
+    </script>
+{% endblock %}
