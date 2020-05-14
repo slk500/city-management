@@ -68,5 +68,18 @@
             })
             document.getElementById('area_latLng').value = JSON.stringify(newArr);
         });
+
+        map.on('draw:edited', function (e) {
+            let layers = e.layers;
+            let objt = layers._layers;
+            let normalize  = objt[function() { for (var k in objt) return k }()]._latlngs;
+
+            let newArr = normalize[0].map(function (val) {
+                return Array(val.lat, val.lng);
+            })
+
+            document.getElementById('area_latLng').value = JSON.stringify(newArr);
+        });
+
     </script>
 {% endblock %}

@@ -24,30 +24,24 @@
     <script>
         {% for area_in_loop in areas %}
             {% if area_in_loop.latLng %}
-                {% if area_in_loop.id  == area.id %}
-                    {% set area_to_edit = area_in_loop.latLng %}
-                {% else %}
+                {% if area_in_loop.id  != area.id %}
                     L.polygon([{{  area_in_loop.latLng }}]).addTo(map);
                 {% endif %}
             {% endif %}
         {% endfor %}
 
         var editableLayers = new L.FeatureGroup();
+        var edit = L.polygon([{{  area.latLng }}]).setStyle({
+            color: 'red'
+        });
+        editableLayers.addLayer(edit);
+
         map.addLayer(editableLayers);
 
         var drawPluginOptions = {
             position: 'topright',
             draw: {
-                polygon: {
-                    allowIntersection: false, // Restricts shapes to simple polygons
-                    drawError: {
-                        color: '#e1e100', // Color the shape will turn when intersects
-                        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-                    },
-                    shapeOptions: {
-                        color: 'red'
-                    }
-                },
+                polygon: false,
                 polyline: false,
                 circle: false,
                 circlemarker: false,
@@ -63,14 +57,15 @@
         let drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
 
-        map.on('draw:created', function (e) {
-            let layer = e.layer;
-            editableLayers.addLayer(layer);
+        map.on('draw:edited', function (e) {
+            let layers = e.layers;
+            let objt = layers._layers;
+            let normalize  = objt[function() { for (var k in objt) return k }()]._latlngs;
 
-            let normalize = layer.getLatLngs();
             let newArr = normalize[0].map(function (val) {
                 return Array(val.lat, val.lng);
             })
+
             document.getElementById('area_latLng').value = JSON.stringify(newArr);
         });
     </script>

@@ -36,9 +36,12 @@ class AreaDto
         return $self;
     }
 
-    public function toEntity(): Area
+    public function toEntity(Area $area = null): Area
     {
-        $area = new Area();
+        if (null === $area) {
+            $area = new Area();
+        }
+
         $area->name = $this->name;
         $area->latLng = $this->latLng;
         $area->tags = $this->tags;

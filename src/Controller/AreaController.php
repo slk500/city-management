@@ -90,10 +90,9 @@ class AreaController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $areaDto = $form->getData();
-            $area = $areaDto->toEntity();
+            $area = $areaDto->toEntity($area);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($area);
             $entityManager->flush();
 
             $this->addFlash('success', 'Sukces! Twoje zmiany zostały zapisane!');
