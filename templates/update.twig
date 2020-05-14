@@ -30,6 +30,8 @@
             {% endif %}
         {% endfor %}
 
+        map.fitBounds({{ area.latLng }});
+
         var editableLayers = new L.FeatureGroup();
         var edit = L.polygon([{{  area.latLng }}]).setStyle({
             color: 'red'
