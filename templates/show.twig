@@ -10,25 +10,51 @@
         <div id="mapid" class="map"></div>
         <a href="{{ path('app_area_update', {id: area.id}) }}" class="btn btn-secondary center">Edytuj</a>
         <br><br>
-            <p>Nazwa: {{ area.name }}</p>
-            <p>Tagi: {{ area.tags }}</p>
-            <p>Status: {{ area.tags }}</p>
-            <p>Opis: {{ area.description }}</p>
+        <p>Nazwa: {{ area.name }}</p>
+        <p>Tagi: {{ area.tags }}</p>
+        <p>Status: {{ area.tags }}</p>
+        <p>Opis: {{ area.description }}</p>
+
+        <h4>Komentarze</h4>
+
+        {{ form_start(form) }}
+        {{ form_row(form.user,{ 'label' : 'Nazwa użytkownika'} ) }}
+        {{ form_row(form.body,{ 'label' : 'Napisz komentarz...'} ) }}
+        <button type="submit" class="btn btn-primary" formnovalidate>Wyślij</button>
+        {{ form_end(form) }}
+
+        {% for comment in comments %}
+
+            <div class="row">
+
+                <div class="col-sm-10 offset-sm-1">
+                    <div class="panel-heading">
+                        <strong> {{ comment.user }} {{ comment.user }} </strong>
+                        <span class="text-muted"> {{ comment.createdAt| date('d-m-Y H:i:s') }}</span>
+                    </div>
+                    <div class="panel-body">
+                        {{ comment.body }}
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
     </div>
 {% endblock %}
 
 {% block javascripts %}
     <script>
         {% for area_in_loop in areas %}
-            {% if area_in_loop.latLng %}
-                {% if area_in_loop.id  == area.id %}
-                    L.polygon([{{  area_in_loop.latLng }}]).setStyle({
-                        color: 'red'
-                    }).addTo(map);
-                {% else %}
-                    L.polygon([{{  area_in_loop.latLng }}]).addTo(map);
-                {% endif %}
-            {% endif %}
+        {% if area_in_loop.latLng %}
+        {% if area_in_loop.id  == area.id %}
+        L.polygon([{{ area_in_loop.latLng }}]).setStyle({
+            color: 'red'
+        }).addTo(map);
+        {% else %}
+        L.polygon([{{ area_in_loop.latLng }}]).addTo(map);
+        {% endif %}
+        {% endif %}
         {% endfor %}
 
         map.fitBounds({{ area.latLng }});

@@ -7,8 +7,11 @@ namespace App\Controller;
 
 
 use App\Entity\Area;
+use App\Entity\Comment;
 use App\Form\AreaType;
 use App\Form\Dto\AreaDto;
+use App\Form\CommentType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,16 +66,34 @@ class AreaController extends AbstractController
     /**
      * @Route("/{id}")
      */
-    public function show(Area $area)
+    public function show(Area $area, Request $request, EntityManagerInterface $entityManager)
     {
-        $areas = $this->getDoctrine()
+        $areas = $entityManager
             ->getRepository(Area::class)
             ->findAll();
+
+        $comments = $entityManager
+            ->getRepository(Comment::class)
+            ->findAll();
+
+        $form = $this->createForm(CommentType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_area_show', ['id' => $area->id]);
+        }
 
         return $this->render('show.twig',
             [
                 'areas' => $areas,
-                'area' => $area
+                'area' => $area,
+                'comments' => $comments,
+                'form' => $form->createView()
             ]);
     }
 
