@@ -2,6 +2,11 @@
 {% block body %}
     <div class="container">
         <div id="mapid" class="map"></div>
+        <ol>
+            <li>Aby dodać nowy obszar kliknij w ikonkę w prawym górnym rogu mapy - "Draw  a polygon". </li>
+            <li>Zaznacz na mapie conajmniej 3 punkty łącząc ostatni punkt z pierwszym aby utworzyć zamknięty obszar. </li>
+        </ol>
+
          <p> Info: W prawym górnym rogu mapy jest ikonka "Draw a polygon". Naciśnij ją, a następnie zaznacz dany obszar na mapie.</p>
                 {{ form_start(form) }}
                 {{ form_errors(form.latLng) }}

@@ -24,6 +24,13 @@ class Comment
     public int $id;
 
     /**
+     * @var Area
+     * @ORM\ManyToOne(targetEntity="App\Entity\Area")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    public $area;
+
+    /**
      * @var string
      * @ORM\Column(type="text")
      */

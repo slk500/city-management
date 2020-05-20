@@ -74,7 +74,7 @@ class AreaController extends AbstractController
 
         $comments = $entityManager
             ->getRepository(Comment::class)
-            ->findAll();
+            ->findBy(['area' => $area]);
 
         $form = $this->createForm(CommentType::class);
 
@@ -82,6 +82,7 @@ class AreaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = $form->getData();
+            $comment->area = $area;
             $entityManager->persist($comment);
             $entityManager->flush();
 
