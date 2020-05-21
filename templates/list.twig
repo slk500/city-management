@@ -30,7 +30,12 @@
     <script>
         {% for area in areas %}
             {% if area.latLng %}
-                L.polygon([{{  area.latLng }}]).addTo(map);
+                var poly = L.polygon([{{ area.latLng }}])
+                    .bindPopup("{{ area.name }}")
+                    .addTo(map);
+                var bounds = poly.getBounds();
+                var center = bounds.getCenter();
+                var marker = L.marker(center).bindPopup("{{ area.name }}").addTo(map);
             {% endif %}
         {% endfor %}
 
