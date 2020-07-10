@@ -15,6 +15,14 @@
         <p>Status: {{ area.status }}</p>
         <p>Opis: {{ area.description }}</p>
 
+        {% if area.id == 1 %}
+        <span>Dokumenty</span>
+        <div><a href="Interpelacja_1.jpg">Interapelacja 1</a> </div>
+            <div><a href="Odpowiedź dla interpelacji_1.pdf">Odpowiedź Interapelacja 1</a> </div>
+            <div><a href="Interpelacja_2.pdf">Interapelacja 2</a> </div>
+            <div><a href="Odpowiedź do interpelacji_2.pdf">Odpowiedź Interapelacja 2</a> </div>
+        {% endif %}
+
         <h4>Komentarze</h4>
 
         {{ form_start(form) }}
