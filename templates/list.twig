@@ -3,7 +3,7 @@
     <div class="container">
         <div id="mapid" class="map"></div>
         <a href="{{ path('app_area_create') }}" class="btn btn-secondary center">Dodaj</a>
-        <table class="table table-striped text-center">
+        <table class="table table-striped text-center" id="myTable">
             <thead>
             <tr>
                 <th class="text-center"></th>
@@ -28,6 +28,16 @@
 
 {% block javascripts %}
     <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable({
+                "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Polish.json"
+                        },
+                    "bPaginate": false,
+                    "dom": 'lifrtp'
+                }
+            );
+        } );
         {% for area in areas %}
             {% if area.latLng %}
                 var poly = L.polygon([{{ area.latLng }}])
