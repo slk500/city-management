@@ -42,4 +42,29 @@ class Project
      * @ORM\Column(type="text", nullable=true)
      */
     public ?string $description;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    public ?string $coordinator;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    public ?string $phone;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    public ?string $link;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    public string $committee;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    public string $district;
 }

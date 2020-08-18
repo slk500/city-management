@@ -19,6 +19,16 @@ class ProjectDto
 
     public ?string $description = null;
 
+    public ?string $coordinator = null;
+
+    public ?string $phone = null;
+
+    public ?string $link = null;
+
+    public ?string $committee = null;
+
+    public ?string $district = null;
+
     public static function fromEntity(Project $area = null): self
     {
         $self = new self();
@@ -32,6 +42,11 @@ class ProjectDto
         $self->tags = $area->tags;
         $self->status = $area->status;
         $self->description = $area->description;
+        $self->coordinator = $area->coordinator;
+        $self->phone = $area->phone;
+        $self->link = $area->link;
+        $self->committee = $area->committee;
+        $self->district = $area->district;
 
         return $self;
     }
@@ -47,6 +62,11 @@ class ProjectDto
         $area->tags = $this->tags;
         $area->status = $this->status;
         $area->description = $this->description;
+        $area->coordinator = $this->coordinator;
+        $area->phone = $this->phone;
+        $area->link = $this->link;
+        $area->committee = $this->committee;
+        $area->district = $this->district;
 
         return $area;
     }

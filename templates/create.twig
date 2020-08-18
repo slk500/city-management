@@ -4,30 +4,46 @@
         <div id="mapid" class="map"></div>
         <span>INFO</span>
         <ol>
-            <li>Aby dodać nowy obszar kliknij w ikonkę w prawym górnym rogu mapy - "Draw  a polygon". </li>
-            <li>Zaznacz na mapie conajmniej 3 punkty łącząc ostatni punkt z pierwszym aby utworzyć zamknięty obszar. </li>
+            <li>Aby dodać nowy obszar kliknij w ikonkę w prawym górnym rogu mapy - "Draw a polygon".</li>
+            <li>Zaznacz na mapie conajmniej 3 punkty łącząc ostatni punkt z pierwszym aby utworzyć zamknięty obszar.
+            </li>
         </ol>
-                {{ form_start(form) }}
-                {{ form_errors(form.latLng) }}
-                {{ form_row(form.name) }}
-                {{ form_row(form.tags, {
-                    label: 'Tagi (opcjonalnie)'
-                }) }}
-                {{ form_row(form.status, {
-                    label: 'Status (opcjonalnie)'
-                }) }}
-                {{ form_row(form.description, {
-                    label: 'Opis (opcjonalnie)'
-                }) }}
-                <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
-                {{ form_end(form) }}
-            </div>
+        {{ form_start(form) }}
+        {{ form_errors(form.latLng) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.tags, {
+            label: 'Tagi (opcjonalnie)'
+        }) }}
+        {{ form_row(form.status, {
+            label: 'Status (opcjonalnie)'
+        }) }}
+        {{ form_row(form.description, {
+            label: 'Opis (opcjonalnie)'
+        }) }}
+        {{ form_row(form.coordinator, {
+            label: 'Koordynator (opcjonalnie)'
+        }) }}
+        {{ form_row(form.phone, {
+            label: 'Koordynator Telefon (opcjonalnie)'
+        }) }}
+        {{ form_row(form.link, {
+            label: 'Link do kanału komunikacji (grupa na fb / etc) (opcjonalnie)'
+        }) }}
+        {{ form_row(form.committee, {
+            label: 'Komitet'
+        }) }}
+        {{ form_row(form.district, {
+            label: 'Dzielnica'
+        }) }}
+        <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
 {% block javascripts %}
     <script>
         {% for area in areas %}
         {% if area.latLng %}
-        L.polygon([{{  area.latLng }}]).addTo(map);
+        L.polygon([{{ area.latLng }}]).addTo(map);
         {% endif %}
         {% endfor %}
 
@@ -67,7 +83,7 @@
             editableLayers.addLayer(layer);
 
             let normalize = layer.getLatLngs();
-            let newArr = normalize[0].map(function(val){
+            let newArr = normalize[0].map(function (val) {
                 return Array(val.lat, val.lng);
             })
             document.getElementById('area_latLng').value = JSON.stringify(newArr);
@@ -76,7 +92,9 @@
         map.on('draw:edited', function (e) {
             let layers = e.layers;
             let objt = layers._layers;
-            let normalize  = objt[function() { for (var k in objt) return k }()]._latlngs;
+            let normalize = objt[function () {
+                for (var k in objt) return k
+            }()]._latlngs;
 
             let newArr = normalize[0].map(function (val) {
                 return Array(val.lat, val.lng);
