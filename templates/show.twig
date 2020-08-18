@@ -6,14 +6,22 @@
                 {{ msg|raw }}
             </div>
         {% endfor %}
-
+        {% if area.latLng %}
         <div id="mapid" class="map"></div>
+        {% endif %}
+
         <a href="{{ path('app_project_update', {id: area.id}) }}" class="btn btn-secondary center">Edytuj</a>
         <br><br>
         <p>Nazwa: {{ area.name }}</p>
         <p>Tagi: {{ area.tags }}</p>
         <p>Status: {{ area.status }}</p>
         <p>Opis: {{ area.description }}</p>
+
+        <p>Koordynator: {{ area.coordinator }}</p>
+        <p>Koordynator Telefon: {{ area.phone }}</p>
+        <p>Link do kanału komunikacji: {{ area.link }}</p>
+        <p>Komitet: {{ area.committee }}</p>
+        <p>Dzielnica: {{ area.district }}</p>
 
         {% if area.id == 1 %}
             <h4>Tablica Informacyjna</h4>

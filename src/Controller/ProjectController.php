@@ -52,7 +52,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($area);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Sukces! Utworzyłeś nowy obszar!');
+            $this->addFlash('success', 'Sukces! Utworzyłeś nowy projekt!');
             return $this->redirectToRoute('app_project_show', ['id' => $area->id]);
         }
 

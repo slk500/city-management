@@ -4,20 +4,7 @@
         <div id="mapid" class="map"></div>
         <p> Info: W prawym górnym rogu mapy jest ikonka "Draw a polygon". Naciśnij ją, a następnie zaznacz dany obszar
             na mapie.</p>
-        {{ form_start(form) }}
-        {{ form_errors(form.latLng) }}
-        {{ form_row(form.name) }}
-        {{ form_row(form.tags, {
-            label: 'Tagi (opcjonalnie)'
-        }) }}
-        {{ form_row(form.status, {
-            label: 'Status (opcjonalnie)'
-        }) }}
-        {{ form_row(form.description, {
-            label: 'Opis (opcjonalnie)'
-        }) }}
-        <button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
-        {{ form_end(form) }}
+        {% include 'form/form_project.twig' %}
     </div>
 {% endblock %}
 {% block javascripts %}

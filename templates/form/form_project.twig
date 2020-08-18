@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+        {{ form_errors(form.latLng) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.tags, {
+            label: 'Tagi (opcjonalnie)'
+        }) }}
+        {{ form_row(form.status, {
+            label: 'Status (opcjonalnie)'
+        }) }}
+        {{ form_row(form.description, {
+            label: 'Opis (opcjonalnie)'
+        }) }}
+        {{ form_row(form.coordinator, {
+            label: 'Koordynator (opcjonalnie)'
+        }) }}
+        {{ form_row(form.phone, {
+            label: 'Koordynator Telefon (opcjonalnie)'
+        }) }}
+        {{ form_row(form.link, {
+            label: 'Link do kanału komunikacji (grupa na fb / etc) (opcjonalnie)'
+        }) }}
+        {{ form_row(form.committee, {
+            label: 'Komitet'
+        }) }}
+        {{ form_row(form.district, {
+            label: 'Dzielnica'
+        }) }}
+<button type="submit" class="btn btn-primary" formnovalidate>Zapisz</button>
+{{ form_end(form) }}
