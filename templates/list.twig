@@ -8,6 +8,8 @@
             <tr>
                 <th class="text-center"></th>
                 <th class="text-center">Nazwa</th>
+                <th class="text-center">Dzielnica</th>
+                <th class="text-center">Komitet</th>
                 <th class="text-center">Tagi</th>
                 <th class="text-center">Status</th>
             </tr>
@@ -17,6 +19,8 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td> <a href="{{ path('app_project_show', { id: area.id }) }}"> {{ area.name }} </a> </td>
+                    <td> {{ area.district }} </td>
+                    <td> {{ area.committee }} </td>
                     <td> {{ area.tags }} </td>
                     <td> {{ area.status }} </td>
                 </tr>
