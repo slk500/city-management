@@ -2,7 +2,7 @@
 {% block body %}
     <div class="container">
         <div id="mapid" class="map"></div>
-        <a href="{{ path('app_area_create') }}" class="btn btn-secondary center">Dodaj</a>
+        <a href="{{ path('app_project_create') }}" class="btn btn-secondary center">Dodaj</a>
         <table class="table table-striped text-center" id="myTable">
             <thead>
             <tr>
@@ -16,7 +16,7 @@
             {% for area in areas %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td> <a href="{{ path('app_area_show', { id: area.id }) }}"> {{ area.name }} </a> </td>
+                    <td> <a href="{{ path('app_project_show', { id: area.id }) }}"> {{ area.name }} </a> </td>
                     <td> {{ area.tags }} </td>
                     <td> {{ area.status }} </td>
                 </tr>

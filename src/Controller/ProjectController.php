@@ -6,17 +6,17 @@ declare(strict_types=1);
 namespace App\Controller;
 
 
-use App\Entity\Area;
+use App\Entity\Project;
 use App\Entity\Comment;
-use App\Form\AreaType;
-use App\Form\Dto\AreaDto;
+use App\Form\ProjectType;
+use App\Form\Dto\ProjectDto;
 use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AreaController extends AbstractController
+class ProjectController extends AbstractController
 {
     /**
      * @Route("/")
@@ -24,7 +24,7 @@ class AreaController extends AbstractController
     public function list()
     {
         $areas = $this->getDoctrine()
-            ->getRepository(Area::class)
+            ->getRepository(Project::class)
             ->findAll();
 
         return $this->render('list.twig', [
@@ -38,10 +38,10 @@ class AreaController extends AbstractController
     public function create(Request $request)
     {
         $areas = $this->getDoctrine()
-            ->getRepository(Area::class)
+            ->getRepository(Project::class)
             ->findAll();
 
-        $form = $this->createForm(AreaType::class);
+        $form = $this->createForm(ProjectType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ class AreaController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Sukces! Utworzyłeś nowy obszar!');
-            return $this->redirectToRoute('app_area_show', ['id' => $area->id]);
+            return $this->redirectToRoute('app_project_show', ['id' => $area->id]);
         }
 
         return $this->render('create.twig',
@@ -66,10 +66,10 @@ class AreaController extends AbstractController
     /**
      * @Route("/{id}")
      */
-    public function show(Area $area, Request $request, EntityManagerInterface $entityManager)
+    public function show(Project $area, Request $request, EntityManagerInterface $entityManager)
     {
         $areas = $entityManager
-            ->getRepository(Area::class)
+            ->getRepository(Project::class)
             ->findAll();
 
         $comments = $entityManager
@@ -86,7 +86,7 @@ class AreaController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_area_show', ['id' => $area->id]);
+            return $this->redirectToRoute('app_project_show', ['id' => $area->id]);
         }
 
         return $this->render('show.twig',
@@ -101,13 +101,13 @@ class AreaController extends AbstractController
     /**
      * @Route("/edytuj/{id}")
      */
-    public function update(Area $area, Request $request)
+    public function update(Project $area, Request $request)
     {
         $areas = $this->getDoctrine()
-            ->getRepository(Area::class)
+            ->getRepository(Project::class)
             ->findAll();
 
-        $form = $this->createForm(AreaType::class, AreaDto::fromEntity($area));
+        $form = $this->createForm(ProjectType::class, ProjectDto::fromEntity($area));
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +118,7 @@ class AreaController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Sukces! Twoje zmiany zostały zapisane!');
-            return $this->redirectToRoute('app_area_show', ['id' => $area->id]);
+            return $this->redirectToRoute('app_project_show', ['id' => $area->id]);
         }
 
         return $this->render('update.twig',

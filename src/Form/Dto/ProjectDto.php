@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Form\Dto;
 
 
-use App\Entity\Area;
+use App\Entity\Project;
 
-class AreaDto
+class ProjectDto
 {
     public ?string $name = null;
 
@@ -19,7 +19,7 @@ class AreaDto
 
     public ?string $description = null;
 
-    public static function fromEntity(Area $area = null): self
+    public static function fromEntity(Project $area = null): self
     {
         $self = new self();
 
@@ -36,10 +36,10 @@ class AreaDto
         return $self;
     }
 
-    public function toEntity(Area $area = null): Area
+    public function toEntity(Project $area = null): Project
     {
         if (null === $area) {
-            $area = new Area();
+            $area = new Project();
         }
 
         $area->name = $this->name;

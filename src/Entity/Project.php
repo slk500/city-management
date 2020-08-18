@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class Area
+class Project
 {
     /**
      * @ORM\Column(type="integer")
@@ -24,9 +24,9 @@ class Area
     public string $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    public string $latLng;
+    public ?string $latLng;
 
     /**
      * @ORM\Column(type="string", nullable=true)

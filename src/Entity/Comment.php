@@ -24,8 +24,8 @@ class Comment
     public int $id;
 
     /**
-     * @var Area
-     * @ORM\ManyToOne(targetEntity="App\Entity\Area")
+     * @var Project
+     * @ORM\ManyToOne(targetEntity="Project")
      * @ORM\JoinColumn(nullable=false)
      */
     public $area;
