@@ -1,0 +1,52 @@
+<script>
+    {% for area_in_loop in areas %}
+    {% if area_in_loop.latLng %}
+    {% if area_in_loop.id  != area.id %}
+    L.polygon([{{ area_in_loop.latLng }}]).addTo(map);
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+    map.fitBounds({{ area.latLng }});
+
+    var editableLayers = new L.FeatureGroup();
+    var edit = L.polygon([{{ area.latLng }}]).setStyle({
+        color: 'red'
+    });
+    editableLayers.addLayer(edit);
+
+    map.addLayer(editableLayers);
+
+    var drawPluginOptions = {
+        position: 'topright',
+        draw: {
+            polygon: false,
+            polyline: false,
+            circle: false,
+            circlemarker: false,
+            rectangle: false,
+            marker: false,
+        },
+        edit: {
+            featureGroup: editableLayers,
+            remove: false
+        }
+    };
+
+    let drawControl = new L.Control.Draw(drawPluginOptions);
+    map.addControl(drawControl);
+
+    map.on('draw:edited', function (e) {
+        let layers = e.layers;
+        let objt = layers._layers;
+        let normalize = objt[function () {
+            for (var k in objt) return k
+        }()]._latlngs;
+
+        let newArr = normalize[0].map(function (val) {
+            return Array(val.lat, val.lng);
+        })
+
+        document.getElementById('project_latLng').value = JSON.stringify(newArr);
+    });
+</script>
